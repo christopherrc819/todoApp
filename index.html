@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en-US" dir="ltr">
+
+<head>
+  <title>todoApp</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="todoApp">
+  <link rel="icon" type="image/png" sizes="32x32" href="fontAwesome/clipboard-list-solid.svg">
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="src/app.js"></script>
+</head>
+
+<body>
+  <div class='todoApp'>
+    <div class='info_bar1'>
+      <div class='welcomeSection'>
+        <div data-welcome-greeting class='welcomeGreeting'></div>
+        <div data-name-section class='nameDisplaySection'>
+          <form data-name-form action="">
+            <input data-name-input onfocus="this.value=''" placeholder='Name' type="text" required>
+            <input data-name-submit value='Submit' type="submit">
+          </form>
+          <div data-name-display></div>
+          <button data-name-reset class='resetBtn'>r</button>
+        </div>
+      </div>
+      <div data-time class='timeSection'></div>
+    </div>
+    <div class='dateSection'>
+    <div data-date-display class='dataDisplay'></div>
+    </div>
+    <div class='lightModeSection'>
+      <img class='greyFilter' src="fontAwesome/adjust-solid.svg" alt="lightModeBtn">
+    </div>
+    <div data-todoInputSection class='todoInputSection'>
+        <form data-todoInputForm>
+          <!-- data-action="" onkeydown="return event.key != 'Enter';" -->
+          <textarea data-todoInputElement type="text" onfocus="this.value=''" rows='1' maxlength='82' placeholder='Enter your todo here. (Max 82 Characters)' required></textarea>
+          <input type="submit" value="Add">
+        </form>
+    </div>
+    <div class='clipBoard'>
+      <img class='redFilter' src="fontAwesome/clipboard-list-solid.svg" alt="clipBoard">
+    </div>
+    <ul data-todoListSection class='todoListSection'>
+      <li data-todoItem class='todoItem'>
+        <div data-todoItemCompleted class='completed greyFilter'>
+          <img src="fontAwesome/check-circle-regular.svg" alt="checkMark">
+        </div>
+        <div data-todoItemDisplay class='todoItemDisplay'>
+            This is a sentence.
+        </div>
+        <div data-deleteItem class='deleteItem redFilter'>
+          <img src="fontAwesome/minus-circle-solid.svg" alt="deleteItem">
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</body>
+
+</html>

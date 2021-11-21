@@ -1,0 +1,231 @@
+:root {
+  --lightBody: #cbcdd5;
+  --darkBody: #333333;
+  --darkText: #707070;
+  --lightText: #64666f;
+  --darkForground: #313439;
+  --darkBackground: #2a2a30;
+  --lightForground: #f4f7f9;
+  --lightBackground: #ffffff;
+  --redColor: #AC393D;
+  --greenColor: #3BAC2E;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: lighter;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+  scroll-behavior: smooth;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+input[type="submit"] {
+-moz-appearance: none;
+-webkit-appearance: none;
+-ms-appearance: none;
+appearance: none;
+}
+
+body {
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--darkBody);
+}
+
+.info_bar1, .dateSection, .lightModeSection {
+  color: var(--darkText);
+}
+
+.todoApp {
+  margin-top: 30px;
+  min-width: 420px;
+  background-color: var(--darkBackground);
+  border-radius: 20px;
+  min-height: 836px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media only screen and (max-width: 420px) {
+  .todoApp {
+    margin-top: 0;
+  }
+}
+
+.todoApp .info_bar1 {
+  padding: 20px 20px 0px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.welcomeSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.welcomeSection input[type=text],
+.welcomeSection input[type=submit],
+.resetBtn {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: var(--darkText);
+  background-color: var(--darkForground)
+}
+
+.welcomeSection input[type=text] {
+  width: 70px;
+  padding: 3px;
+}
+
+.welcomeSection input[type=submit] {
+  width: 55px;
+}
+
+.nameDisplaySection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.nameDisplay {
+  max-width: 176px;
+}
+/* Light mode section */
+.lightModeSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.lightModeSection img {
+  max-width: 30px;
+}
+.greyFilter {
+  filter: invert(44%) sepia(0%) saturate(1565%) hue-rotate(173deg) brightness(99%) contrast(94%);
+}
+/* Date Display Section */
+.dateSection {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  padding: 0px 20px 13px 20px;
+  align-items: center;
+}
+/* Todo Input Section */
+.todoInputSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  width: 400px;
+  min-height: 60px;
+  background-color: var(--darkForground);
+  border-radius: 10px;
+  margin-top: 15px;
+}
+.todoInputSection form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.todoInputSection textarea,
+.todoInputSection input[type=submit] {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+
+}
+.todoInputSection textarea {
+  width: 325px;
+  color: var(--darkText);
+  background-color: var(--darkForground);
+  word-wrap: break-word;
+  word-break: break-all;
+  font-family: Arial, Helvetica, sans-serif;
+  resize: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.todoInputSection input[type=submit] {
+  width: 50px;
+  height: 50px;
+  background-color: var(--darkBackground);
+  color: var(--greenColor);
+}
+/* Clipboard Image */
+.clipBoard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 52px auto;
+}
+.clipBoard img {
+  max-width: 30px;
+}
+.redFilter {
+  filter: invert(21%) sepia(27%) saturate(6453%) hue-rotate(340deg) brightness(91%) contrast(76%);
+}
+/* Todo List Section */
+.todoListSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  align-items: center;
+  min-width: 400px;
+  min-height: 60px;
+  margin-bottom: 10px;
+  padding-left: 0;
+}
+.todoItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 400px;
+  padding: 10px;
+  min-height: 60px;
+  border-radius: 10px;
+  background-color: var(--darkForground);
+}
+.completed {
+  width: 20px;
+  height: 20px;
+}
+
+.todoItemDisplay {
+  min-width: 315px;
+  max-width: 325px;
+  color: var(--darkText);
+}
+.deleteItem {
+  width: 20px;
+  height: 20px;
+}
+.greenFilter {
+  filter: invert(46%) sepia(82%) saturate(439%) hue-rotate(67deg) brightness(101%) contrast(92%);
+}
