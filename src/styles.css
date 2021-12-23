@@ -43,17 +43,22 @@ body {
 .info_bar1, .dateSection, .lightModeSection {
   color: var(--darkText);
 }
-
+.todoApp {
+  --bkg-colour: #2a2a30;
+}
 .todoApp {
   margin-top: 30px;
   min-width: 420px;
-  background-color: var(--darkBackground);
+  background-color: var(--bkg-colour);
   border-radius: 20px;
   min-height: 836px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+}
+.todoApp.lightTheme {
+  --bkg-colour: #ffffff;
 }
 
 @media only screen and (max-width: 420px) {

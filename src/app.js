@@ -93,8 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   //Light Mode section
   const lightModeBtn = document.querySelector('[data-lightModeBtn]')
+  const todoApp = document.querySelector('[data-todoApp]')
   function lightMode () {
-    console.log('Light Mode Working')
+    todoApp.classList.toggle('lightTheme');
   }
   lightModeBtn.addEventListener('click', lightMode);
   // todoInputSection
