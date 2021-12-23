@@ -91,19 +91,25 @@ document.addEventListener('DOMContentLoaded', () => {
     nameForm.style.display = 'block';
     nameResetButton.style.display = 'none';
   })
-
+  //Light Mode section
+  const lightModeBtn = document.querySelector('[data-lightModeBtn]')
+  function lightMode () {
+    console.log('Light Mode Working')
+  }
+  lightModeBtn.addEventListener('click', lightMode);
   // todoInputSection
   const todoInputSection = document.querySelector('[data-todoInputSection]');
   const todoInputForm = document.querySelector('[data-todoInputForm]');
   const todoInputElement = document.querySelector('[data-todoInputElement]');
   const todoListSection = document.querySelector('[data-todoListSection]');
-  todoListSection.addEventListener('click', function (e) {
-    if (e.target && e.target.matches('div.completed')) {
-      console.log('list item');
-    }
-  })
   let todoArray = [];
 
+  todoInputForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    addTodo(todoInputElement.value);
+  })
+
+  //Input Task Function
   function addTodo(item) {
     if (item !== '') {
       const todoItem = {
@@ -111,15 +117,61 @@ document.addEventListener('DOMContentLoaded', () => {
         task: item,
         completed: false
       };
+      //Add item to current array.
       todoArray.push(todoItem);
+      //pass in total array into local storage via function.
       addToLocalStorage(todoArray);
+      //Clear inputed value in form.
       todoInputElement.value = '';
     }
   }
 
-  function addToLocalStorage(addArray) {
-    localStorage.setItem('todoList', JSON.stringify(addArray));
-    getFromLocalStorage();
+  //Render Todos Function
+  function renderTodos(todoList) {
+    todoListSection.innerHTML = '';
+
+    todoArray.forEach((todoList) => {
+      const listItem = document.createElement('LI');
+      listItem.setAttribute('data-id', todoList.id);
+      listItem.setAttribute('class', 'todoItem');
+      if (todoList.completed == true) {
+        //Toggle Check Mark Section
+        const checkMarkImg = document.createElement('img');
+        checkMarkImg.setAttribute('class', 'completedStyle completed greenFilter');
+        checkMarkImg.src='fontAwesome/check-circle-solid.svg';
+        listItem.appendChild(checkMarkImg);
+        //Display Task
+        const todoItemSection = document.createElement('div');
+        todoItemSection.setAttribute('class', 'todoItemDisplay');
+        todoItemSection.innerHTML = `${todoList.task}`
+        listItem.appendChild(todoItemSection);
+
+
+      } else if (todoList.completed == false) {
+        //Toggle Check Mark Section
+        const checkMarkImg = document.createElement('img');
+        checkMarkImg.setAttribute('class', 'completedStyle greyFilter')
+        checkMarkImg.src='fontAwesome/check-circle-solid.svg';
+        listItem.appendChild(checkMarkImg);
+        //Display Task
+        const todoItemSection = document.createElement('div');
+        todoItemSection.setAttribute('class', 'todoItemDisplay');
+        todoItemSection.innerHTML = `${todoList.task}`
+        listItem.appendChild(todoItemSection);
+      }
+      //Delete Section
+      const deleteItemImg = document.createElement('img')
+      deleteItemImg.setAttribute('class', 'deleteItem redFilter');
+      deleteItemImg.src='fontAwesome/minus-circle-solid.svg';
+      listItem.appendChild(deleteItemImg);
+      todoListSection.appendChild(listItem);
+    })
+  }
+
+  function addToLocalStorage(todoArray) {
+    localStorage.setItem('todoList', JSON.stringify(todoArray));
+    // getFromLocalStorage();
+    renderTodos(todoArray);
   }
 
   function getFromLocalStorage() {
@@ -130,74 +182,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderTodos(todoArray)
   }
-  getFromLocalStorage();
-
-  function renderTodos(todoList) {
-    todoListSection.innerHTML = '';
-    todoArray.forEach(todoList => {
-      const listItem = document.createElement('LI');
-      listItem.setAttribute('data-id', todoList.id);
-      listItem.setAttribute('class', 'todoItem');
-      if (todoList.completed === true) {
-        listItem.innerHTML = `
-        <div data-todoItemCompleted class='completed greenFilter' >
-          <img src="fontAwesome/check-circle-solid.svg" alt="checkMark">
-        </div>
-        <div data-todoItemDisplay class='todoItemDisplay'>
-            ${todoList.task}
-        </div>
-        <div data-deleteItem class='deleteItem redFilter'>
-          <img src="fontAwesome/minus-circle-solid.svg" alt="deleteItem">
-        </div>
-        `
-      } else if (todoList.completed === false) {
-        listItem.innerHTML = `
-        <div data-todoItemCompleted class='completed greyFilter' >
-          <img src="fontAwesome/check-circle-regular.svg" alt="checkMark">
-        </div>
-        <div data-todoItemDisplay class='todoItemDisplay'>
-            ${todoList.task}
-        </div>
-        <div data-deleteItem class='deleteItem redFilter'>
-          <img src="fontAwesome/minus-circle-solid.svg" alt="deleteItem">
-        </div>
-        `
+  //AddComplete
+  function addComplete(id) {
+    todoArray.forEach((item)=>{
+      if (item.id == id) {
+        item.completed = true;
       }
-
-      todoListSection.appendChild(listItem);
-    })
-    // const todoItemCompleted = document.querySelector('[data-todoItemCompleted]')
-    //
-    // function test() {
-    //   console.log('working')
-    // }
-    //
-    // todoItemCompleted.forEach(item => {
-    //   item.addEventListener('click', test)
-    // })
-    // console.log(todoItemCompleted)
+    });
+    addToLocalStorage(todoArray);
+  }
+  function removeComplete(id) {
+    todoArray.forEach((item)=>{
+      if (item.id == id) {
+        item.completed = false;
+      }
+    });
+    addToLocalStorage(todoArray);
+  }
+  function deleteItem(id) {
+    const findIndex = todoArray.findIndex(item => item.id == id);
+    const itemToRemove = todoArray[findIndex]
+    todoArray = todoArray.filter((item, index) => item !== itemToRemove);
+    console.log('delete function working');
+    return addToLocalStorage(todoArray)
   }
 
-  todoInputForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    addTodo(todoInputElement.value);
+  getFromLocalStorage();
+  //Add click listener on parent ul, listen for list item with class of completed and run removeComplete Function, else, addComplete.
+  todoListSection.addEventListener('click',(event)=>{
+    if (event.target.classList.contains('completed')) {
+      removeComplete(event.target.parentElement.getAttribute('data-id'));
+    } else {
+      addComplete(event.target.parentElement.getAttribute('data-id'));
+    }
+    if (event.target.classList.contains('deleteItem')) {
+      deleteItem(event.target.parentElement.getAttribute('data-id'));
+    }
   })
-  // renderTodos(todos) {
-  //
-  // }
-  // addToLocalStorage(todos) {
-  //
-  // }
-  // getFromLocalStorage() {
-  //
-  // }
-  // toggle(id) {
-  //
-  // }
-  // deleteTodo(id) {
-  //
-  // }
-  //submit but with event listenser
-  //Day Greeting + User Input name
-  //Date Display
+
 })

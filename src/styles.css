@@ -212,7 +212,7 @@ body {
   border-radius: 10px;
   background-color: var(--darkForground);
 }
-.completed {
+.completedStyle {
   width: 20px;
   height: 20px;
 }
