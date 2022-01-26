@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+  //Todo data
+  const todoInputSection = document.querySelector('[data-todoInputSection]');
+  const todoInputForm = document.querySelector('[data-todoInputForm]');
+  const todoInputElement = document.querySelector('[data-todoInputElement]');
+  const todoListSection = document.querySelector('[data-todoListSection]');
+
+  const lightModeBtn = document.querySelector('[data-lightModeBtn]')
+  const todoApp = document.querySelector('[data-todoApp]')
+  const inputBtn = document.querySelector('[data-inputBtn]')
 
   //Dynamic greeting message
   const welcomeGreeting = document.querySelector('[data-welcome-greeting]');
@@ -91,18 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     nameForm.style.display = 'block';
     nameResetButton.style.display = 'none';
   })
-  //Light Mode section
-  const lightModeBtn = document.querySelector('[data-lightModeBtn]')
-  const todoApp = document.querySelector('[data-todoApp]')
-  function lightMode () {
-    todoApp.classList.toggle('lightTheme');
-  }
-  lightModeBtn.addEventListener('click', lightMode);
+
   // todoInputSection
-  const todoInputSection = document.querySelector('[data-todoInputSection]');
-  const todoInputForm = document.querySelector('[data-todoInputForm]');
-  const todoInputElement = document.querySelector('[data-todoInputElement]');
-  const todoListSection = document.querySelector('[data-todoListSection]');
   let todoArray = [];
 
   todoInputForm.addEventListener('submit', (event) => {
@@ -128,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //Render Todos Function
+
   function renderTodos(todoList) {
     todoListSection.innerHTML = '';
 
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Toggle Check Mark Section
         const checkMarkImg = document.createElement('img');
         checkMarkImg.setAttribute('class', 'completedStyle completed greenFilter');
-        checkMarkImg.src='fontAwesome/check-circle-solid.svg';
+        checkMarkImg.src = 'fontAwesome/check-circle-solid.svg';
         listItem.appendChild(checkMarkImg);
         //Display Task
         const todoItemSection = document.createElement('div');
@@ -147,12 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
         todoItemSection.innerHTML = `${todoList.task}`
         listItem.appendChild(todoItemSection);
 
-
       } else if (todoList.completed == false) {
         //Toggle Check Mark Section
         const checkMarkImg = document.createElement('img');
         checkMarkImg.setAttribute('class', 'completedStyle greyFilter')
-        checkMarkImg.src='fontAwesome/check-circle-solid.svg';
+        checkMarkImg.src = 'fontAwesome/check-circle-solid.svg';
         listItem.appendChild(checkMarkImg);
         //Display Task
         const todoItemSection = document.createElement('div');
@@ -163,15 +162,15 @@ document.addEventListener('DOMContentLoaded', () => {
       //Delete Section
       const deleteItemImg = document.createElement('img')
       deleteItemImg.setAttribute('class', 'deleteItem redFilter');
-      deleteItemImg.src='fontAwesome/minus-circle-solid.svg';
+      deleteItemImg.src = 'fontAwesome/minus-circle-solid.svg';
       listItem.appendChild(deleteItemImg);
       todoListSection.appendChild(listItem);
+
     })
   }
 
   function addToLocalStorage(todoArray) {
     localStorage.setItem('todoList', JSON.stringify(todoArray));
-    // getFromLocalStorage();
     renderTodos(todoArray);
   }
 
@@ -185,21 +184,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   //AddComplete
   function addComplete(id) {
-    todoArray.forEach((item)=>{
+    todoArray.forEach((item) => {
       if (item.id == id) {
         item.completed = true;
       }
     });
     addToLocalStorage(todoArray);
   }
+
   function removeComplete(id) {
-    todoArray.forEach((item)=>{
+    todoArray.forEach((item) => {
       if (item.id == id) {
         item.completed = false;
       }
     });
     addToLocalStorage(todoArray);
   }
+
   function deleteItem(id) {
     const findIndex = todoArray.findIndex(item => item.id == id);
     const itemToRemove = todoArray[findIndex]
@@ -207,14 +208,56 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('delete function working');
     return addToLocalStorage(todoArray)
   }
-
   getFromLocalStorage();
+
+  //Light Mode section
+  const todoItemElement = document.querySelectorAll('.todoItem')
+  const currentTheme = localStorage.getItem("theme");
+
+  function checkTheme() {
+    if (currentTheme == 'light') {
+      document.body.classList.add('lightTheme')
+      todoApp.classList.add('lightTheme');
+      todoInputSection.classList.add('lightTheme')
+      todoInputElement.classList.add('lightTheme')
+      inputBtn.classList.add('lightTheme');
+      todoItemElement.forEach(element => element.classList.add('lightTheme'));
+      nameResetButton.classList.add('lightTheme');
+      nameSubmitBtn.classList.add('lightTheme');
+      inputNameElement.classList.add('lightTheme')
+    }
+  }
+  checkTheme();
+
+
+  lightModeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('lightTheme');
+    todoApp.classList.toggle('lightTheme');
+    todoInputSection.classList.toggle('lightTheme')
+    todoInputElement.classList.toggle('lightTheme')
+    inputBtn.classList.toggle('lightTheme')
+    todoItemElement.forEach(element => element.classList.toggle('lightTheme'))
+    nameResetButton.classList.toggle('lightTheme');
+    nameSubmitBtn.classList.toggle('lightTheme');
+    inputNameElement.classList.toggle('lightTheme')
+    let theme
+    if (todoApp.classList.contains('lightTheme')) {
+      theme = 'light'
+    } else {
+      theme = 'dark'
+    }
+    localStorage.setItem('theme', theme);
+  })
+
   //Add click listener on parent ul, listen for list item with class of completed and run removeComplete Function, else, addComplete.
-  todoListSection.addEventListener('click',(event)=>{
+  todoListSection.addEventListener('click', (event) => {
+    // event.preventDefault();
     if (event.target.classList.contains('completed')) {
       removeComplete(event.target.parentElement.getAttribute('data-id'));
+      checkTheme();
     } else {
       addComplete(event.target.parentElement.getAttribute('data-id'));
+      checkTheme();
     }
     if (event.target.classList.contains('deleteItem')) {
       deleteItem(event.target.parentElement.getAttribute('data-id'));

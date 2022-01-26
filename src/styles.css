@@ -12,6 +12,13 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: lighter;
+  /* Default Dark Styles */
+  --todoApp-colour: #2a2a30;
+  --body-colour: #333333;
+  --todoInputSection-colour: #313439;
+  --todoInputSection_textarea-colour: #313439;
+  --nameResetBtn-colour: #313439;
+  --todoItem-colour: #313439;
 }
 
 html {
@@ -23,11 +30,12 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
 input[type="submit"] {
--moz-appearance: none;
--webkit-appearance: none;
--ms-appearance: none;
-appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
 }
 
 body {
@@ -37,19 +45,18 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: var(--darkBody);
+  background-color: var(--body-colour);
 }
-
+body.lightTheme {
+  --body-colour: #cbcdd5;
+}
 .info_bar1, .dateSection, .lightModeSection {
   color: var(--darkText);
 }
 .todoApp {
-  --bkg-colour: #2a2a30;
-}
-.todoApp {
   margin-top: 30px;
   min-width: 420px;
-  background-color: var(--bkg-colour);
+  background-color: var(--todoApp-colour);
   border-radius: 20px;
   min-height: 836px;
   display: flex;
@@ -57,8 +64,9 @@ body {
   justify-content: flex-start;
   align-items: center;
 }
+
 .todoApp.lightTheme {
-  --bkg-colour: #ffffff;
+  --todoApp-colour: #ffffff;
 }
 
 @media only screen and (max-width: 420px) {
@@ -91,7 +99,13 @@ body {
   outline: none;
   border-radius: 5px;
   color: var(--darkText);
-  background-color: var(--darkForground)
+  background-color: var(--nameResetBtn-colour)
+}
+
+.welcomeSection input[type=text].lightTheme,
+.welcomeSection input[type=submit].lightTheme,
+.resetBtn.lightTheme {
+  --nameResetBtn-colour: #f4f7f9;
 }
 
 .welcomeSection input[type=text] {
@@ -110,9 +124,11 @@ body {
   justify-content: center;
   gap: 7px;
 }
+
 .nameDisplay {
   max-width: 176px;
 }
+
 /* Light mode section */
 .lightModeSection {
   display: flex;
@@ -121,12 +137,15 @@ body {
   align-items: center;
   width: 100%;
 }
+
 .lightModeSection img {
   max-width: 30px;
 }
+
 .greyFilter {
   filter: invert(44%) sepia(0%) saturate(1565%) hue-rotate(173deg) brightness(99%) contrast(94%);
 }
+
 /* Date Display Section */
 .dateSection {
   display: flex;
@@ -135,6 +154,7 @@ body {
   padding: 0px 20px 13px 20px;
   align-items: center;
 }
+
 /* Todo Input Section */
 .todoInputSection {
   display: flex;
@@ -144,27 +164,37 @@ body {
   align-items: center;
   width: 400px;
   min-height: 60px;
-  background-color: var(--darkForground);
+  background-color: var(--todoInputSection-colour);
   border-radius: 10px;
   margin-top: 15px;
 }
+
+.todoInputSection.lightTheme {
+  --todoInputSection-colour: #f4f7f9;
+}
+
 .todoInputSection form {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+
 .todoInputSection textarea,
 .todoInputSection input[type=submit] {
   border: none;
   outline: none;
   border-radius: 5px;
+}
+
+.todoInputSection textarea {
 
 }
+
 .todoInputSection textarea {
   width: 325px;
   color: var(--darkText);
-  background-color: var(--darkForground);
+  background-color: var(--todoInputSection_textarea-colour);
   word-wrap: break-word;
   word-break: break-all;
   font-family: Arial, Helvetica, sans-serif;
@@ -173,12 +203,25 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.todoInputSection textarea.lightTheme {
+  --todoInputSection_textarea-colour: #f4f7f9;
+}
+
+.todoInputSection input[type=submit] {
+  --bkg-colour: #2a2a30;
+}
+
 .todoInputSection input[type=submit] {
   width: 50px;
   height: 50px;
-  background-color: var(--darkBackground);
+  background-color: var(--bkg-colour);
   color: var(--greenColor);
 }
+.todoInputSection input[type=submit].lightTheme {
+  --bkg-colour: #ffffff;
+}
+
 /* Clipboard Image */
 .clipBoard {
   display: flex;
@@ -188,12 +231,15 @@ body {
   width: 100%;
   margin: 52px auto;
 }
+
 .clipBoard img {
   max-width: 30px;
 }
+
 .redFilter {
   filter: invert(21%) sepia(27%) saturate(6453%) hue-rotate(340deg) brightness(91%) contrast(76%);
 }
+
 /* Todo List Section */
 .todoListSection {
   display: flex;
@@ -206,6 +252,7 @@ body {
   margin-bottom: 10px;
   padding-left: 0;
 }
+
 .todoItem {
   display: flex;
   flex-direction: row;
@@ -215,8 +262,12 @@ body {
   padding: 10px;
   min-height: 60px;
   border-radius: 10px;
-  background-color: var(--darkForground);
+  background-color: var(--todoItem-colour);
 }
+.todoItem.lightTheme {
+  --todoItem-colour: #f4f7f9;
+}
+
 .completedStyle {
   width: 20px;
   height: 20px;
@@ -227,10 +278,12 @@ body {
   max-width: 325px;
   color: var(--darkText);
 }
+
 .deleteItem {
   width: 20px;
   height: 20px;
 }
+
 .greenFilter {
   filter: invert(46%) sepia(82%) saturate(439%) hue-rotate(67deg) brightness(101%) contrast(92%);
 }

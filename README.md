@@ -13,10 +13,12 @@
 
 ## Overview
 
-### The challenge
+### The Challenge
 
 - Implement Light and Dark Theme with toggle switch.
-- Use localStorage to save todo list array and user name settings.
+  - Fix lightMode reverting back when event Listener fires off.
+    - Figure out where to put todoItem selector.
+- Use localStorage to save todo list array, user name, and lightMode settings.
 - Todos
   - Real-Time Time display
   - Implement Carriage return to input sections
@@ -60,7 +62,7 @@ Use this section to outline areas that you want to continue focusing on in futur
 
 - [Web Dev Simplified](https://blog.webdevsimplified.com/2020-03/tagged-template-literals/) - Really helped me understand ES6 template literals
 - [davidwalsh.name](https://davidwalsh.name/event-delegate) - JS event delegation
-- [css-tricks.com](https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/#using-custom-properties) - Used this to apply custom properties for light theme. 
+- [css-tricks.com](https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/#using-custom-properties) - Used this to apply custom properties for light theme.
 
 ## Author
 

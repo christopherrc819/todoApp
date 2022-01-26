@@ -39,24 +39,13 @@
         <form data-todoInputForm>
           <!-- data-action="" onkeydown="return event.key != 'Enter';" -->
           <textarea data-todoInputElement type="text" onfocus="this.value=''" rows='1' maxlength='82' placeholder='Enter your todo here. (Max 82 Characters)' required></textarea>
-          <input type="submit" value="Add">
+          <input data-inputBtn type="submit" value="Add">
         </form>
     </div>
     <div class='clipBoard'>
       <img class='redFilter' src="fontAwesome/clipboard-list-solid.svg" alt="clipBoard">
     </div>
     <ul data-todoListSection class='todoListSection'>
-      <li data-todoItem class='todoItem'>
-        <div data-todoItemCompleted class='completed greyFilter'>
-          <img src="fontAwesome/check-circle-regular.svg" alt="checkMark">
-        </div>
-        <div data-todoItemDisplay class='todoItemDisplay'>
-            This is a sentence.
-        </div>
-        <div data-deleteItem class='deleteItem redFilter'>
-          <img src="fontAwesome/minus-circle-solid.svg" alt="deleteItem">
-        </div>
-      </li>
     </ul>
   </div>
 
