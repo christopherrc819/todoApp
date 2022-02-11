@@ -190,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     addToLocalStorage(todoArray);
+
   }
 
   function removeComplete(id) {
@@ -199,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     addToLocalStorage(todoArray);
+
   }
 
   function deleteItem(id) {
@@ -261,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.target.classList.contains('deleteItem')) {
       deleteItem(event.target.parentElement.getAttribute('data-id'));
     }
-    
   })
 
 
