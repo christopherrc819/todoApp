@@ -208,12 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('delete function working');
     return addToLocalStorage(todoArray)
   }
+
+
   getFromLocalStorage();
 
   //Light Mode section
-  const todoItemElement = document.querySelectorAll('.todoItem')
   const currentTheme = localStorage.getItem("theme");
-
+  const todoItemElement = document.querySelectorAll('.todoItem')
   function checkTheme() {
     if (currentTheme == 'light') {
       document.body.classList.add('lightTheme')
@@ -236,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     todoInputSection.classList.toggle('lightTheme')
     todoInputElement.classList.toggle('lightTheme')
     inputBtn.classList.toggle('lightTheme')
-    todoItemElement.forEach(element => element.classList.toggle('lightTheme'))
+    todoItemElement.forEach(element => element.classList.toggle('lightTheme'));
     nameResetButton.classList.toggle('lightTheme');
     nameSubmitBtn.classList.toggle('lightTheme');
     inputNameElement.classList.toggle('lightTheme')
@@ -254,14 +255,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // event.preventDefault();
     if (event.target.classList.contains('completed')) {
       removeComplete(event.target.parentElement.getAttribute('data-id'));
-      checkTheme();
     } else {
       addComplete(event.target.parentElement.getAttribute('data-id'));
-      checkTheme();
     }
     if (event.target.classList.contains('deleteItem')) {
       deleteItem(event.target.parentElement.getAttribute('data-id'));
     }
+    
   })
+
 
 })
