@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const todayClock = new Date();
     let hours = todayClock.getHours();
     let minutes = todayClock.getMinutes() < 10 ? '0' + todayClock.getMinutes() : todayClock.getMinutes();
-    let seconds = todayClock.getSeconds() < 10 ? '0' + todayClock.getSeconds() : todayClock.getSeconds();
-    document.querySelector('[data-clock]').innerText = `${hours}:${minutes}:${seconds}`;
+    document.querySelector('[data-clock]').innerText = `${hours}:${minutes}`;
     setTimeout(getTime, 1000);
   }
   getTime();
