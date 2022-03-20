@@ -10,53 +10,57 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputBtn = document.querySelector('[data-inputBtn]')
 
   //Dynamic greeting message
-  const welcomeGreeting = document.querySelector('[data-welcome-greeting]');
-  const today = new Date();
+  function displayWelcome() {
+      let todayWelcome = new Date();
+      let todayGreeting;
+      let hourNow = todayWelcome.getHours();
+      if (hourNow === 0) {
+        todayGreeting = 'Good Midnight';
+      } else if (hourNow > 18 && hourNow < 24) {
+        todayGreeting = 'Good Evening';
+      } else if (hourNow === 18) {
+        todayGreeting = 'Good Dinner';
+      } else if (hourNow === 12) {
+        todayGreeting = 'Happy Noon Time';
+      } else if (hourNow > 12 && hourNow < 18) {
+        todayGreeting = 'Good Afternoon';
+      } else if (hourNow > 0 && hourNow < 12) {
+        todayGreeting = 'Grand Rising';
+      }
 
-  function greetingMessage() {
-    let todayGreeting;
-    const hourNow = today.getHours();
-    if (hourNow === 0) {
-      todayGreeting = 'Good Midnight';
-    } else if (hourNow > 18 && hourNow < 24) {
-      todayGreeting = 'Good Evening';
-    } else if (hourNow === 18) {
-      todayGreeting = 'Good Dinner';
-    } else if (hourNow === 12) {
-      todayGreeting = 'Happy Noon Time';
-    } else if (hourNow > 12 && hourNow < 18) {
-      todayGreeting = 'Good Afternoon';
-    } else if (hourNow > 0 && hourNow < 12) {
-      todayGreeting = 'Grand Rising';
-    }
-    return todayGreeting;
+    document.querySelector('[data-welcome-greeting]').innerText = `${todayGreeting}`;
+    setTimeout(displayWelcome, 3600000);
   }
-  welcomeGreeting.innerText = greetingMessage();
+  displayWelcome();
+
+
   //Display Time
-  const timeDisplay = document.querySelector('[data-time]');
-
   function getTime() {
-    const hours = today.getHours();
-    const minutes = today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes();
-    return `${hours}:${minutes}`
+    const todayClock = new Date();
+    let hours = todayClock.getHours();
+    let minutes = todayClock.getMinutes() < 10 ? '0' + todayClock.getMinutes() : todayClock.getMinutes();
+    let seconds = todayClock.getSeconds() < 10 ? '0' + todayClock.getSeconds() : todayClock.getSeconds();
+    document.querySelector('[data-clock]').innerText = `${hours}:${minutes}:${seconds}`;
+    setTimeout(getTime, 1000);
   }
-  timeDisplay.innerText = getTime()
-  //Display date
-  const dateDisplayElement = document.querySelector('[data-date-display]')
+  getTime();
 
+  //Display date
   function displayDate() {
+    const todayDate = new Date();
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday ", "Thursday", "Friday", "Saturday"];
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    const dayNumber = today.getDate(); //numerical value
-    const day = dayNames[today.getDay()];
-    const month = monthNames[today.getMonth()];
-    const year = today.getFullYear();
-    // const msgDate = day + ' ' + dayNumber + ' ' + month + ' ' + year;
-    const msgDate = `${dayNumber} ${day} ${month} ${year}`
-    return msgDate;
+    const dayNumber = todayDate.getDate(); //numerical value
+    const day = dayNames[todayDate.getDay()];
+    const month = monthNames[todayDate.getMonth()];
+    const year = todayDate.getFullYear();
+    const dateString = `${dayNumber} ${day} ${month} ${year}`;
+    document.querySelector('[data-date-display]').innerText = dateString;
+    setTimeout(displayDate, 3600000);
   }
-  dateDisplayElement.innerText = displayDate();
+  displayDate()
+
   //Name Input section
   const nameForm = document.querySelector('[data-name-form]')
   const inputNameElement = document.querySelector('[data-name-input]')
@@ -107,7 +111,19 @@ document.addEventListener('DOMContentLoaded', () => {
   todoInputForm.addEventListener('submit', (event) => {
     event.preventDefault();
     addTodo(todoInputElement.value);
+    console.log('todo item submitted')
   })
+
+  function submitOnEnter(event) {
+    if (event.which === 13) {
+      event.target.form.dispatchEvent(new Event("submit", {
+        cancelable: true
+      }));
+      event.preventDefault();
+    }
+  }
+
+  todoInputElement.addEventListener('keypress', submitOnEnter)
 
   //Input Task Function
   function addTodo(item) {
@@ -127,14 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   //Render Todos Function
+  const currentTheme = localStorage.getItem("theme");
 
   function renderTodos(todoList) {
     todoListSection.innerHTML = '';
-
     todoArray.forEach((todoList) => {
       const listItem = document.createElement('LI');
       listItem.setAttribute('data-id', todoList.id);
-      listItem.setAttribute('class', 'todoItem');
+      // listItem.setAttribute('class', 'todoItem');
+      if (currentTheme == 'light') {
+        listItem.setAttribute('class', 'todoItem lightTheme');
+      } else if (currentTheme == 'dark') {
+        listItem.setAttribute('class', 'todoItem');
+      }
       if (todoList.completed == true) {
         //Toggle Check Mark Section
         const checkMarkImg = document.createElement('img');
@@ -165,13 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteItemImg.src = 'fontAwesome/minus-circle-solid.svg';
       listItem.appendChild(deleteItemImg);
       todoListSection.appendChild(listItem);
-
     })
   }
 
   function addToLocalStorage(todoArray) {
     localStorage.setItem('todoList', JSON.stringify(todoArray));
     renderTodos(todoArray);
+    console.log('item added to localStorage')
   }
 
   function getFromLocalStorage() {
@@ -181,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(JSON.parse(storedTodoItems));
     }
     renderTodos(todoArray)
+    console.log('getFromLocalStorage')
   }
   //AddComplete
   function addComplete(id) {
@@ -190,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     addToLocalStorage(todoArray);
-
+    console.log('addComplete')
   }
 
   function removeComplete(id) {
@@ -200,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     addToLocalStorage(todoArray);
-
+    console.log('removeComplete')
   }
 
   function deleteItem(id) {
@@ -211,12 +233,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return addToLocalStorage(todoArray)
   }
 
-
-  getFromLocalStorage();
+  getFromLocalStorage()
 
   //Light Mode section
-  const currentTheme = localStorage.getItem("theme");
   const todoItemElement = document.querySelectorAll('.todoItem')
+
+
   function checkTheme() {
     if (currentTheme == 'light') {
       document.body.classList.add('lightTheme')
@@ -229,8 +251,9 @@ document.addEventListener('DOMContentLoaded', () => {
       nameSubmitBtn.classList.add('lightTheme');
       inputNameElement.classList.add('lightTheme')
     }
+    console.log('checkTheme')
   }
-  checkTheme();
+  checkTheme()
 
 
   lightModeBtn.addEventListener('click', () => {
@@ -250,11 +273,14 @@ document.addEventListener('DOMContentLoaded', () => {
       theme = 'dark'
     }
     localStorage.setItem('theme', theme);
+    window.location.reload();
   })
+
+
+
 
   //Add click listener on parent ul, listen for list item with class of completed and run removeComplete Function, else, addComplete.
   todoListSection.addEventListener('click', (event) => {
-    // event.preventDefault();
     if (event.target.classList.contains('completed')) {
       removeComplete(event.target.parentElement.getAttribute('data-id'));
     } else {
@@ -265,5 +291,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-
+  // DOMContentLoaded End
 })
