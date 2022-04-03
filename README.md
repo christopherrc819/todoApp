@@ -12,6 +12,7 @@
 - [Acknowledgments](#acknowledgments)
 
 ## Overview
+- Really used alot of methods to traverse the DOM.
 
 ### The Challenge
 
@@ -19,7 +20,7 @@
   - Fix lightMode reverting back when event Listener fires off.
 - Check - Use localStorage to save todo list array, user name, and lightMode settings.
 - Todos
-  - Real-Time Time display
+  - Check - Real-Time Time display
   - Implement Drag and drop
 
 ### Links

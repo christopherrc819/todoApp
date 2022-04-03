@@ -4,6 +4,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const todoInputForm = document.querySelector('[data-todoInputForm]');
   const todoInputElement = document.querySelector('[data-todoInputElement]');
   const todoListSection = document.querySelector('[data-todoListSection]');
+  // Drag and Drop Event Listener
+  todoListSection.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(e.clientY);
+    console.log(afterElement)
+    const currentlyDragging = document.querySelector('.dragging')
+    console.log(afterElement)
+    if (afterElement == null) {
+      todoListSection.appendChild(currentlyDragging);
+    } else {
+      todoListSection.insertBefore(currentlyDragging, afterElement);
+    }
+    console.log('currentlyDragging')
+    console.log('dragover')
+  })
+
+  function getDragAfterElement(y) {
+    const draggableElements = [...todoListSection.querySelectorAll('.draggable:not(.dragging)')]
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect()
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return {
+          offset: offset,
+          element: child
+        }
+      } else {
+        return closest
+      }
+    }, {
+      offset: Number.NEGATIVE_INFINITY}).element
+  }
 
   const lightModeBtn = document.querySelector('[data-lightModeBtn]')
   const todoApp = document.querySelector('[data-todoApp]')
@@ -11,22 +43,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //Dynamic greeting message
   function displayWelcome() {
-      let todayWelcome = new Date();
-      let todayGreeting;
-      let hourNow = todayWelcome.getHours();
-      if (hourNow === 0) {
-        todayGreeting = 'Good Midnight';
-      } else if (hourNow > 18 && hourNow < 24) {
-        todayGreeting = 'Good Evening';
-      } else if (hourNow === 18) {
-        todayGreeting = 'Good Dinner';
-      } else if (hourNow === 12) {
-        todayGreeting = 'Happy Noon Time';
-      } else if (hourNow > 12 && hourNow < 18) {
-        todayGreeting = 'Good Afternoon';
-      } else if (hourNow > 0 && hourNow < 12) {
-        todayGreeting = 'Grand Rising';
-      }
+    let todayWelcome = new Date();
+    let todayGreeting;
+    let hourNow = todayWelcome.getHours();
+    if (hourNow === 0) {
+      todayGreeting = 'Good Midnight';
+    } else if (hourNow > 18 && hourNow < 24) {
+      todayGreeting = 'Good Evening';
+    } else if (hourNow === 18) {
+      todayGreeting = 'Good Dinner';
+    } else if (hourNow === 12) {
+      todayGreeting = 'Happy Noon Time';
+    } else if (hourNow > 12 && hourNow < 18) {
+      todayGreeting = 'Good Afternoon';
+    } else if (hourNow > 0 && hourNow < 12) {
+      todayGreeting = 'Grand Rising';
+    }
 
     document.querySelector('[data-welcome-greeting]').innerText = `${todayGreeting}`;
     setTimeout(displayWelcome, 3600000);
@@ -149,11 +181,19 @@ document.addEventListener('DOMContentLoaded', () => {
     todoArray.forEach((todoList) => {
       const listItem = document.createElement('LI');
       listItem.setAttribute('data-id', todoList.id);
-      // listItem.setAttribute('class', 'todoItem');
+      listItem.setAttribute('draggable', true);
+      listItem.addEventListener('dragstart', () => {
+        listItem.classList.add('dragging');
+        console.log('dragstart');
+      })
+      listItem.addEventListener('dragend', () => {
+        listItem.classList.remove('dragging')
+        console.log('dragend')
+      })
       if (currentTheme == 'light') {
-        listItem.setAttribute('class', 'todoItem lightTheme');
+        listItem.setAttribute('class', 'todoItem draggable lightTheme');
       } else if (currentTheme == 'dark') {
-        listItem.setAttribute('class', 'todoItem');
+        listItem.setAttribute('class', 'todoItem draggable');
       }
       if (todoList.completed == true) {
         //Toggle Check Mark Section
@@ -187,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
       todoListSection.appendChild(listItem);
     })
   }
+
 
   function addToLocalStorage(todoArray) {
     localStorage.setItem('todoList', JSON.stringify(todoArray));
@@ -233,10 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   getFromLocalStorage()
-
   //Light Mode section
   const todoItemElement = document.querySelectorAll('.todoItem')
-
 
   function checkTheme() {
     if (currentTheme == 'light') {
@@ -253,7 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('checkTheme')
   }
   checkTheme()
-
 
   lightModeBtn.addEventListener('click', () => {
     document.body.classList.toggle('lightTheme');
@@ -274,9 +312,6 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', theme);
     window.location.reload();
   })
-
-
-
 
   //Add click listener on parent ul, listen for list item with class of completed and run removeComplete Function, else, addComplete.
   todoListSection.addEventListener('click', (event) => {
