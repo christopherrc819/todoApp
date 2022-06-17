@@ -16,12 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       todoListSection.insertBefore(currentlyDragging, afterElement);
     }
-    console.log('currentlyDragging')
-    console.log('dragover')
   })
 
   function getDragAfterElement(y) {
     const draggableElements = [...todoListSection.querySelectorAll('.draggable:not(.dragging)')]
+    console.log(draggableElements);
     return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect()
       const offset = y - box.top - box.height / 2;
@@ -34,7 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return closest
       }
     }, {
-      offset: Number.NEGATIVE_INFINITY}).element
+      offset: Number.NEGATIVE_INFINITY
+    }).element
   }
 
   const lightModeBtn = document.querySelector('[data-lightModeBtn]')
@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('todo item submitted')
   })
 
+//Enable carriage return (char 13) on form.
   function submitOnEnter(event) {
     if (event.which === 13) {
       event.target.form.dispatchEvent(new Event("submit", {
@@ -153,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
     }
   }
-
   todoInputElement.addEventListener('keypress', submitOnEnter)
 
   //Input Task Function
