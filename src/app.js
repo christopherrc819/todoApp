@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemToRemove = todoArray[findIndex]
     todoArray = todoArray.filter((item, index) => item !== itemToRemove);
     console.log('delete function working');
-    return addToLocalStorage(todoArray)
+    addToLocalStorage(todoArray)
   }
 
   getFromLocalStorage()
