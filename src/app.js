@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   todoListSection.addEventListener('dragover', (e) => {
     e.preventDefault();
     const afterElement = getDragAfterElement(e.clientY);
-    console.log(afterElement)
+    // console.log(afterElement)
     const currentlyDragging = document.querySelector('.dragging')
-    console.log(afterElement)
     if (afterElement == null) {
       todoListSection.appendChild(currentlyDragging);
     } else {
@@ -20,21 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getDragAfterElement(y) {
     const draggableElements = [...todoListSection.querySelectorAll('.draggable:not(.dragging)')]
-    console.log(draggableElements);
+    console.log(draggableElements)
     return draggableElements.reduce((closest, child) => {
       const box = child.getBoundingClientRect()
       const offset = y - box.top - box.height / 2;
       if (offset < 0 && offset > closest.offset) {
-        return {
-          offset: offset,
-          element: child
-        }
+        return {offset: offset, element: child}
       } else {
         return closest
       }
-    }, {
-      offset: Number.NEGATIVE_INFINITY
-    }).element
+    }, {offset: Number.NEGATIVE_INFINITY}).element
   }
 
   const lightModeBtn = document.querySelector('[data-lightModeBtn]')
@@ -184,11 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
       listItem.setAttribute('draggable', true);
       listItem.addEventListener('dragstart', () => {
         listItem.classList.add('dragging');
-        console.log('dragstart');
       })
       listItem.addEventListener('dragend', () => {
         listItem.classList.remove('dragging')
-        console.log('dragend')
+
       })
       if (currentTheme == 'light') {
         listItem.setAttribute('class', 'todoItem draggable lightTheme');
@@ -252,7 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     addToLocalStorage(todoArray);
-    console.log('addComplete')
   }
 
   function removeComplete(id) {
