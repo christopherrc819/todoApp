@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       todoListSection.insertBefore(currentlyDragging, afterElement);
     }
   })
-
+  
   function getDragAfterElement(y) {
     const draggableElements = [...todoListSection.querySelectorAll('.draggable:not(.dragging)')]
     console.log(draggableElements)
