@@ -5,31 +5,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const todoInputElement = document.querySelector('[data-todoInputElement]');
   const todoListSection = document.querySelector('[data-todoListSection]');
   // Drag and Drop Event Listener
-  todoListSection.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    const afterElement = getDragAfterElement(e.clientY);
-    // console.log(afterElement)
-    const currentlyDragging = document.querySelector('.dragging')
-    if (afterElement == null) {
-      todoListSection.appendChild(currentlyDragging);
-    } else {
-      todoListSection.insertBefore(currentlyDragging, afterElement);
-    }
-  })
-  
-  function getDragAfterElement(y) {
-    const draggableElements = [...todoListSection.querySelectorAll('.draggable:not(.dragging)')]
-    console.log(draggableElements)
-    return draggableElements.reduce((closest, child) => {
-      const box = child.getBoundingClientRect()
-      const offset = y - box.top - box.height / 2;
-      if (offset < 0 && offset > closest.offset) {
-        return {offset: offset, element: child}
-      } else {
-        return closest
-      }
-    }, {offset: Number.NEGATIVE_INFINITY}).element
-  }
+  // todoListSection.addEventListener('dragover', (e) => {
+  //   e.preventDefault();
+  //   const afterElement = getDragAfterElement(e.clientY);
+  //   const currentlyDragging = document.querySelector('.dragging')
+  //   if (afterElement == null) {
+  //     todoListSection.appendChild(currentlyDragging);
+  //   } else {
+  //     todoListSection.insertBefore(currentlyDragging, afterElement);
+  //   }
+  //   // localStorage.removeItem('todoList');
+  //   const getAllElements = [...todoListSection.querySelectorAll('.todoListSection li')]
+  //   getAllElements.forEach(item => {
+  //     const getTask = item.textContent;
+  //     const getId = item.getAttribute('data-id')
+  //     const getCompleted = item.getAttribute('completed')
+  //   })
+  // })
+  //
+  // function getDragAfterElement(y) {
+  //   const draggableElements = [...todoListSection.querySelectorAll('.draggable:not(.dragging)')]
+  //   return draggableElements.reduce((closest, child) => {
+  //     const box = child.getBoundingClientRect()
+  //     const offset = y - box.top - box.height / 2;
+  //     if (offset < 0 && offset > closest.offset) {
+  //       return {
+  //         offset: offset,
+  //         element: child
+  //       }
+  //     } else {
+  //       return closest
+  //     }
+  //   }, {
+  //     offset: Number.NEGATIVE_INFINITY
+  //   }).element
+  // }
+
+
 
   const lightModeBtn = document.querySelector('[data-lightModeBtn]')
   const todoApp = document.querySelector('[data-todoApp]')
@@ -132,14 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // todoInputSection
   let todoArray = [];
-
   todoInputForm.addEventListener('submit', (event) => {
     event.preventDefault();
     addTodo(todoInputElement.value);
-    console.log('todo item submitted')
   })
 
-//Enable carriage return (char 13) on form.
+  //Enable carriage return (char 13) on form.
   function submitOnEnter(event) {
     if (event.which === 13) {
       event.target.form.dispatchEvent(new Event("submit", {
@@ -167,6 +177,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Drag Event Functions
+  function dragOver(e) {
+    e.preventDefault();
+    console.log('Event: Dragover')
+  }
+  function dragEnter() {
+    listItem.classList.add('dragging');
+  }
+  function dragLeave() {
+    listItem.classList.remove('dragging')
+  }
+  function dragEnter() {
+    console.log('dragStartIndex')
+  }
+  function dragStart () {
+    console.log('dragStartIndex')
+  }
+  function dragDrop () {
+    console.log('endIndex')
+  }
+
   //Render Todos Function
   const currentTheme = localStorage.getItem("theme");
 
@@ -176,13 +207,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const listItem = document.createElement('LI');
       listItem.setAttribute('data-id', todoList.id);
       listItem.setAttribute('draggable', true);
-      listItem.addEventListener('dragstart', () => {
-        listItem.classList.add('dragging');
-      })
-      listItem.addEventListener('dragend', () => {
-        listItem.classList.remove('dragging')
+      listItem.addEventListener('dragover', dragOver)
+      listItem.addEventListener('dragstart', dragStart)
+      listItem.addEventListener('dragenter', dragEnter);
+      listItem.addEventListener('drop', dragDrop);
+      listItem.addEventListener('dragleave', dragLeave);
 
-      })
       if (currentTheme == 'light') {
         listItem.setAttribute('class', 'todoItem draggable lightTheme');
       } else if (currentTheme == 'dark') {
@@ -225,17 +255,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function addToLocalStorage(todoArray) {
     localStorage.setItem('todoList', JSON.stringify(todoArray));
     renderTodos(todoArray);
-    console.log('item added to localStorage')
   }
 
   function getFromLocalStorage() {
     const storedTodoItems = localStorage.getItem('todoList')
     if (storedTodoItems) {
       todoArray = JSON.parse(storedTodoItems);
-      console.log(JSON.parse(storedTodoItems));
     }
     renderTodos(todoArray)
-    console.log('getFromLocalStorage')
   }
   //AddComplete
   function addComplete(id) {
@@ -254,14 +281,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     addToLocalStorage(todoArray);
-    console.log('removeComplete')
   }
 
   function deleteItem(id) {
     const findIndex = todoArray.findIndex(item => item.id == id);
     const itemToRemove = todoArray[findIndex]
     todoArray = todoArray.filter((item, index) => item !== itemToRemove);
-    console.log('delete function working');
     addToLocalStorage(todoArray)
   }
 
@@ -281,7 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
       nameSubmitBtn.classList.add('lightTheme');
       inputNameElement.classList.add('lightTheme')
     }
-    console.log('checkTheme')
   }
   checkTheme()
 
@@ -316,6 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteItem(event.target.parentElement.getAttribute('data-id'));
     }
   })
-
+  console.log(todoArray)
   // DOMContentLoaded End
 })
