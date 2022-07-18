@@ -177,37 +177,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Drag Event Functions
-  function dragOver(e) {
-    e.preventDefault();
-    console.log('Event: Dragover')
-  }
-  function dragEnter() {
-    listItem.classList.add('dragging');
-  }
-  function dragLeave() {
-    listItem.classList.remove('dragging')
-  }
-  function dragEnter() {
-    console.log('dragStartIndex')
-  }
-  function dragStart () {
-    console.log('dragStartIndex')
-  }
-  function dragDrop () {
-    console.log('endIndex')
-  }
-
   //Render Todos Function
   const currentTheme = localStorage.getItem("theme");
 
   function renderTodos(todoList) {
     todoListSection.innerHTML = '';
+    todoListSection.addEventListener('dragover', dragOver)
     todoArray.forEach((todoList) => {
       const listItem = document.createElement('LI');
       listItem.setAttribute('data-id', todoList.id);
       listItem.setAttribute('draggable', true);
-      listItem.addEventListener('dragover', dragOver)
+
       listItem.addEventListener('dragstart', dragStart)
       listItem.addEventListener('dragenter', dragEnter);
       listItem.addEventListener('drop', dragDrop);
@@ -249,6 +229,26 @@ document.addEventListener('DOMContentLoaded', () => {
       listItem.appendChild(deleteItemImg);
       todoListSection.appendChild(listItem);
     })
+  }
+
+  // Drag Event Functions
+  function dragOver(e) {
+    e.preventDefault();
+    // console.log('Event: Dragover')
+  }
+  function dragEnter() {
+    this.classList.add('dragging');
+    console.log('dragEnter')
+  }
+  function dragLeave() {
+    this.classList.remove('dragging')
+    console.log('dragLeave')
+  }
+  function dragStart () {
+    console.log('dragStart')
+  }
+  function dragDrop () {
+    console.log('endIndex')
   }
 
 
