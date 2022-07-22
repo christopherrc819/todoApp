@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderTodos(todoList) {
     todoListSection.innerHTML = '';
     todoArray.forEach((todoList, index) => {
-      const listItem = document.createElement('LI');
+      const listItem = document.createElement('li');
       listItem.setAttribute('data-id', todoList.id);
       listItem.setAttribute('data-index', index + 1);
       listItem.setAttribute('draggable', true);
