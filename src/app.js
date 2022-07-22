@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const todoItem = {
         id: Date.now(),
         task: item,
-        completed: false
+        completed: false,
       };
       //Add item to current array.
       todoArray.push(todoItem);
@@ -181,17 +181,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentTheme = localStorage.getItem("theme");
 
   function renderTodos(todoList) {
+
     todoListSection.innerHTML = '';
-    todoListSection.addEventListener('dragover', dragOver)
-    todoArray.forEach((todoList) => {
+    todoArray.forEach((todoList, index) => {
       const listItem = document.createElement('LI');
       listItem.setAttribute('data-id', todoList.id);
+      listItem.setAttribute('data-index', index + 1);
       listItem.setAttribute('draggable', true);
-
-      listItem.addEventListener('dragstart', dragStart)
-      listItem.addEventListener('dragenter', dragEnter);
-      listItem.addEventListener('drop', dragDrop);
-      listItem.addEventListener('dragleave', dragLeave);
+      // listItem.addEventListener('dragstart', () => {
+      //   listItem.classList.add('dragging');
+      //   console.log('dragstart')
+      // });
+      // listItem.addEventListener('dragend', () => {
+      //   listItem.classList.remove('dragging');
+      //   console.log('dragend')
+      // });
+      // listItem.addEventListener('dragenter', dragEnter);
+      // listItem.addEventListener('drop', dragDrop);
+      // listItem.addEventListener('dragleave', dragLeave);
 
       if (currentTheme == 'light') {
         listItem.setAttribute('class', 'todoItem draggable lightTheme');
@@ -234,20 +241,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // Drag Event Functions
   function dragOver(e) {
     e.preventDefault();
-    // console.log('Event: Dragover')
+    console.log('Event: Dragover')
   }
+
   function dragEnter() {
-    this.classList.add('dragging');
+
     console.log('dragEnter')
   }
+
   function dragLeave() {
     this.classList.remove('dragging')
     console.log('dragLeave')
   }
-  function dragStart () {
+
+  function dragStart() {
+    this.classList.add('dragging');
     console.log('dragStart')
   }
-  function dragDrop () {
+
+  function dragEnd() {
+    this.classlist.remove('dragging')
+  }
+
+  function dragDrop() {
     console.log('endIndex')
   }
 
