@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       listItem.setAttribute('data-id', todoList.id);
       listItem.setAttribute('data-index', index + 1);
       listItem.setAttribute('draggable', true);
+      listItem.setAttribute('class', 'todoItem draggable')
       // listItem.addEventListener('dragstart', () => {
       //   listItem.classList.add('dragging');
       //   console.log('dragstart')
@@ -161,11 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // listItem.addEventListener('drop', dragDrop);
       // listItem.addEventListener('dragleave', dragLeave);
 
-      if (currentTheme == 'light') {
-        listItem.setAttribute('class', 'todoItem draggable lightTheme');
-      } else if (currentTheme == 'dark') {
-        listItem.setAttribute('class', 'todoItem draggable');
-      }
+      // if (currentTheme == 'light') {
+      //   listItem.setAttribute('class', 'todoItem draggable lightTheme');
+      // } else if (currentTheme == 'dark') {
+      //   listItem.setAttribute('class', 'todoItem draggable');
+      // }
       if (todoList.completed == true) {
         //Toggle Check Mark Section
         const checkMarkImg = document.createElement('img');
