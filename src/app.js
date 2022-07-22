@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const todoItem = {
         id: Date.now(),
         task: item,
-        completed: false,
+        completed: false
       };
       //Add item to current array.
       todoArray.push(todoItem);
