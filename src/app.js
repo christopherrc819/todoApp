@@ -141,15 +141,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //Render Todos Function
   const currentTheme = localStorage.getItem("theme");
-
+  console.log(currentTheme);
   function renderTodos(todoList) {
-
     todoListSection.innerHTML = '';
-    todoArray.forEach((todoList) => {
+    todoArray.forEach((todoList, index) => {
       const listItem = document.createElement('LI');
       listItem.setAttribute('data-id', todoList.id);
-      // listItem.setAttribute('data-index', index + 1);
-      // listItem.setAttribute('draggable', true);
+      listItem.setAttribute('data-index', index + 1);
+      listItem.setAttribute('draggable', true);
       // listItem.addEventListener('dragstart', () => {
       //   listItem.classList.add('dragging');
       //   console.log('dragstart')
