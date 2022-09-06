@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // listItem.addEventListener('dragenter', dragEnter);
       // listItem.addEventListener('drop', dragDrop);
       // listItem.addEventListener('dragleave', dragLeave);
-      // Why doesn't this if statement work
+      // Why doesn't this if statement work, this doesnt make sense.
       // if (currentTheme == 'light') {
       //   listItem.setAttribute('class', 'todoItem draggable lightTheme');
       // } else if (currentTheme == 'dark') {
