@@ -147,7 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
       listItem.setAttribute('data-id', todoList.id);
       listItem.setAttribute('data-index', index + 1);
       listItem.setAttribute('draggable', true);
-      listItem.setAttribute('class', 'todoItem draggable')
+      // listItem.setAttribute('class', 'todoItem draggable')
+
+      // Start Code
       // listItem.addEventListener('dragstart', () => {
       //   listItem.classList.add('dragging');
       //   console.log('dragstart')
@@ -159,12 +161,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // listItem.addEventListener('dragenter', dragEnter);
       // listItem.addEventListener('drop', dragDrop);
       // listItem.addEventListener('dragleave', dragLeave);
+      // End Code Here
+
       // Work on this if statement to make it work on live version.
-      // if (currentTheme == 'light') {
-      //   listItem.setAttribute('class', 'todoItem draggable lightTheme');
-      // } else if (currentTheme == 'dark') {
-      //   listItem.setAttribute('class', 'todoItem draggable');
-      // }
+      if (currentTheme == 'light') {
+        listItem.setAttribute('class', 'todoItem draggable lightTheme');
+      } else if (currentTheme == 'dark') {
+        listItem.setAttribute('class', 'todoItem draggable');
+      }
 
       if (todoList.completed == true) {
         //Toggle Check Mark Section
