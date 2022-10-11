@@ -322,5 +322,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
   console.log(todoArray)
-  // DOMContentLoaded End
 })
