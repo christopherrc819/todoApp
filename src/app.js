@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //Name Input section
   const nameForm = document.querySelector('[data-name-form]')
   const inputNameElement = document.querySelector('[data-name-input]')
-  const nameSection = document.querySelector('[data-name-section]')
   const nameResetButton = document.querySelector('[data-name-reset]')
   const nameSubmitBtn = document.querySelector('[data-name-submit]')
   const nameDisplay = document.querySelector('[data-name-display]')
