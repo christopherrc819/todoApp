@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  //Todo data
+
   const todoInputSection = document.querySelector('[data-todoInputSection]');
   const todoInputForm = document.querySelector('[data-todoInputForm]');
   const todoInputElement = document.querySelector('[data-todoInputElement]');
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const todoApp = document.querySelector('[data-todoApp]')
   const inputBtn = document.querySelector('[data-inputBtn]')
 
-  //Dynamic greeting message
   function displayWelcome() {
     let todayWelcome = new Date();
     let todayGreeting;
@@ -33,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   displayWelcome();
 
-
-  //Display Time
   function getTime() {
     const todayClock = new Date();
     let hours = todayClock.getHours();
@@ -44,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   getTime();
 
-  //Display date
   function displayDate() {
     const todayDate = new Date();
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday ", "Thursday", "Friday", "Saturday"];
@@ -77,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nameResetButton.style.display = 'none';
     }
   }
-  getName() //check for stored Name, gets name and places name nameDisplay div.
+  getName()
 
   function inputName(name) {
     if (name !== '') {
@@ -121,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   todoInputElement.addEventListener('keypress', submitOnEnter)
 
-  //Input Task Function
   function addTodo(item) {
     if (item !== '') {
       const todoItem = {
@@ -137,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       todoInputElement.value = '';
     }
   }
-  //Render Todos Function
+
   const currentTheme = localStorage.getItem('theme');
   function renderTodos(todoList) {
     todoListSection.innerHTML = '';
@@ -147,27 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
       listItem.setAttribute('data-index', index + 1);
       listItem.setAttribute('draggable', true);
       listItem.setAttribute('class', 'todoItem draggable')
-
-      // Start Code
-      // listItem.addEventListener('dragstart', () => {
-      //   listItem.classList.add('dragging');
-      //   console.log('dragstart')
-      // });
-      // listItem.addEventListener('dragend', () => {
-      //   listItem.classList.remove('dragging');
-      //   console.log('dragend')
-      // });
-      // listItem.addEventListener('dragenter', dragEnter);
-      // listItem.addEventListener('drop', dragDrop);
-      // listItem.addEventListener('dragleave', dragLeave);
-      // End Code Here
-
-      // Work on this if statement to make it work on live version.
-      // if (currentTheme == 'light') {
-      //   listItem.setAttribute('class', 'todoItem draggable lightTheme');
-      // } else if (currentTheme == 'dark') {
-      //   listItem.setAttribute('class', 'todoItem draggable');
-      // }
 
       if (todoList.completed == true) {
         //Toggle Check Mark Section
@@ -202,36 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  // Drag Event Functions
-  function dragOver(e) {
-    e.preventDefault();
-    console.log('Event: Dragover')
-  }
-
-  function dragEnter() {
-
-    console.log('dragEnter')
-  }
-
-  function dragLeave() {
-    this.classList.remove('dragging')
-    console.log('dragLeave')
-  }
-
-  function dragStart() {
-    this.classList.add('dragging');
-    console.log('dragStart')
-  }
-
-  function dragEnd() {
-    this.classlist.remove('dragging')
-  }
-
-  function dragDrop() {
-    console.log('endIndex')
-  }
-
-
   function addToLocalStorage(todoArray) {
     localStorage.setItem('todoList', JSON.stringify(todoArray));
     renderTodos(todoArray);
@@ -244,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderTodos(todoArray)
   }
-  //AddComplete
+
   function addComplete(id) {
     todoArray.forEach((item) => {
       if (item.id == id) {
@@ -265,13 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function deleteItem(id) {
     const findIndex = todoArray.findIndex(item => item.id == id);
+    console.log(findIndex);
     const itemToRemove = todoArray[findIndex]
     todoArray = todoArray.filter((item, index) => item !== itemToRemove);
     addToLocalStorage(todoArray)
   }
 
   getFromLocalStorage()
-  //Light Mode section
+
   const todoItemElement = document.querySelectorAll('.todoItem')
 
   function checkTheme() {
@@ -309,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.reload();
   })
 
-  //Add click listener on parent ul, listen for list item with class of completed and run removeComplete Function, else, addComplete.
   todoListSection.addEventListener('click', (event) => {
     if (event.target.classList.contains('completed')) {
       removeComplete(event.target.parentElement.getAttribute('data-id'));
@@ -320,5 +264,5 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteItem(event.target.parentElement.getAttribute('data-id'));
     }
   })
-  console.log(todoArray)
+  console.log('Todo Array', todoArray)
 })
